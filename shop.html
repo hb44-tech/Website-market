@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop | Hb Market</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    color: #222;
+}
+
+header {
+    background: #111;
+    color: white;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    color: #e5b83e;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    padding: 35px 6%;
+}
+
+.search {
+    width: 100%;
+    max-width: 600px;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin: 20px 0;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.filters button {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filters button:hover,
+.filters button.active {
+    background: #e5b83e;
+    border-color: #e5b83e;
+}
+
+.products {
+    display: grid;
+    grid-template-columns:
+    repeat(auto-fit, minmax(190px, 1fr));
+    gap: 20px;
+}
+
+.product {
+    background: white;
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+.product img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product h3 {
+    margin-bottom: 8px;
+}
+
+.price {
+    color: #a77b12;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.seller-name {
+    font-size: 12px;
+    color: #777;
+}
+
+.empty {
+    color: #777;
+    padding: 30px 0;
+}
+
+footer {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HB MARKET.</div>
+    <a href="index.html">← Back Home</a>
+</header>
+
+<div class="container">
+
+    <h1>Explore Products</h1>
+    <p>Discover products from different sellers.</p>
+
+    <input
+        type="search"
+        class="search"
+        id="search"
+        placeholder="Search products..."
+    >
+
+    <div class="filters">
+        <button class="active" onclick="filterProducts('All', this)">All</button>
+        <button onclick="filterProducts('Clothing', this)">Clothing</button>
+        <button onclick="filterProducts('Accessories', this)">Accessories</button>
+        <button onclick="filterProducts('Artwork', this)">Artwork</button>
+        <button onclick="filterProducts('Food', this)">Food</button>
+        <button onclick="filterProducts('Electronics', this)">Electronics</button>
+        <button onclick="filterProducts('Other Products', this)">Others</button>
+    </div>
+
+    <div class="products" id="productList"></div>
+
+    <p class="empty" id="emptyMessage">
+        No products have been uploaded yet.
+    </p>
+
+</div>
+
+<footer>
+    Hb Market | Powered by Hb Tech
+</footer>
+
+<script>
+let currentCategory = "All";
+
+function getProducts() {
+    try {
+        return JSON.parse(
+            localStorage.getItem("hbMarketProducts")
+        ) || [];
+    } catch {
+        return [];
+    }
+}
+
+function displayProducts() {
+
+    const products = getProducts();
+    const search = document.getElementById("search")
+        .value.toLowerCase();
+
+    const list = document.getElementById("productList");
+    const empty = document.getElementById("emptyMessage");
+
+    list.innerHTML = "";
+
+    const filtered = products.filter(product => {
+
+        const matchesCategory =
+            currentCategory === "All" ||
+            product.category === currentCategory;
+
+        const matchesSearch =
+            (product.name || "").toLowerCase().includes(search);
+
+        return matchesCategory && matchesSearch;
+    });
+
+    empty.style.display =
+        filtered.length ? "none" : "block";
+
+    filtered.forEach(product => {
+
+        const card = document.createElement("div");
+        card.className = "product";
+
+        const img = document.createElement("img");
+        img.src = product.image;
+        img.alt = product.name;
+
+        const info = document.createElement("div");
+        info.className = "product-info";
+
+        const name = document.createElement("h3");
+        name.textContent = product.name;
+
+        const description = document.createElement("p");
+        description.textContent = product.description || "";
+
+        const price = document.createElement("p");
+        price.className = "price";
+        price.textContent =
+            "₦" + Number(product.price).toLocaleString();
+
+        const seller = document.createElement("p");
+        seller.className = "seller-name";
+        seller.textContent =
+            "Seller: " + (product.sellerName || "Hb Market seller");
+
+        info.append(name, description, price, seller);
+        card.append(img, info);
+        list.appendChild(card);
+    });
+}
+
+function filterProducts(category, button) {
+
+    currentCategory = category;
+
+    document.querySelectorAll(".filters button")
+        .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    displayProducts();
+}
+
+document.getElementById("search")
+    .addEventListener("input", displayProducts);
+
+const params = new URLSearchParams(window.location.search);
+const initialSearch = params.get("search");
+
+if (initialSearch) {
+    document.getElementById("search").value = initialSearch;
+}
+
+displayProducts();
+</script>
+
+</body>
+</html>

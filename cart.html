@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cart | Hb Market</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    color: #222;
+}
+
+header {
+    background: #111;
+    color: white;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #e5b83e;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    padding: 35px 6%;
+}
+
+.cart-item {
+    background: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.price {
+    color: #a77b12;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.remove {
+    background: #d93636;
+    color: white;
+    border: none;
+    padding: 9px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.summary {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 25px;
+}
+
+.checkout {
+    background: #e5b83e;
+    color: #111;
+    padding: 13px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.empty {
+    color: #777;
+    margin-top: 25px;
+}
+
+footer {
+    background: #111;
+    color: white;
+    padding: 25px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+@media(max-width: 500px) {
+    .cart-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HB MARKET.</div>
+    <a href="shop.html">← Continue Shopping</a>
+</header>
+
+<div class="container">
+
+    <h1>My Shopping Cart</h1>
+
+    <div id="cartList"></div>
+
+    <div id="emptyMessage" class="empty">
+        Your cart is currently empty.
+    </div>
+
+    <div class="summary">
+        <h2>Order Summary</h2>
+        <br>
+        <h3 id="total">Total: ₦0</h3>
+
+        <button class="checkout" onclick="checkout()">
+            Proceed to Checkout
+        </button>
+    </div>
+
+</div>
+
+<footer>
+    Hb Market | Powered by Hb Tech
+</footer>
+
+<script>
+
+function getCart() {
+    try {
+        return JSON.parse(
+            localStorage.getItem("hbMarketCart")
+        ) || [];
+    } catch {
+        return [];
+    }
+}
+
+function saveCart(cart) {
+    localStorage.setItem(
+        "hbMarketCart",
+        JSON.stringify(cart)
+    );
+}
+
+function displayCart() {
+
+    const cart = getCart();
+
+    const list = document.getElementById("cartList");
+    const empty = document.getElementById("emptyMessage");
+
+    list.innerHTML = "";
+
+    let total = 0;
+
+    empty.style.display =
+        cart.length ? "none" : "block";
+
+    cart.forEach((item, index) => {
+
+        total += Number(item.price) * (item.quantity || 1);
+
+        const card = document.createElement("div");
+        card.className = "cart-item";
+
+        const img = document.createElement("img");
+        img.src = item.image;
+        img.alt = item.name;
+
+        const info = document.createElement("div");
+        info.className = "item-info";
+
+        const name = document.createElement("h3");
+        name.textContent = item.name;
+
+        const price = document.createElement("p");
+        price.className = "price";
+        price.textContent =
+            "₦" + Number(item.price).toLocaleString();
+
+        const quantity = document.createElement("p");
+        quantity.textContent =
+            "Quantity: " + (item.quantity || 1);
+
+        const remove = document.createElement("button");
+        remove.className = "remove";
+        remove.textContent = "Remove";
+
+        remove.onclick = function() {
+            removeItem(index);
+        };
+
+        info.append(name, price, quantity);
+        card.append(img, info, remove);
+        list.appendChild(card);
+    });
+
+    document.getElementById("total").textContent =
+        "Total: ₦" + total.toLocaleString();
+}
+
+function removeItem(index) {
+
+    const cart = getCart();
+
+    cart.splice(index, 1);
+
+    saveCart(cart);
+
+    displayCart();
+}
+
+function checkout() {
+
+    const cart = getCart();
+
+    if (!cart.length) {
+        alert("Your shopping cart is empty.");
+        return;
+    }
+
+    alert(
+        "Your cart is ready. " +
+        "We'll connect secure checkout and seller ordering next."
+    );
+}
+
+displayCart();
+
+</script>
+
+</body>
+</html>

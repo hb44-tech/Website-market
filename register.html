@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Registration | Hb Market</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #222;
+}
+
+header {
+    background: #111;
+    padding: 22px 7%;
+}
+
+.logo {
+    color: #e5b83e;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 480px;
+    background: white;
+    margin: 45px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px #ddd;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.description {
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 22px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #a77b12;
+}
+
+.login {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login a {
+    color: #a77b12;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HB MARKET.</div>
+</header>
+
+<div class="container">
+
+    <h1>Become a Seller</h1>
+
+    <p class="description">
+        Create your seller account to start your
+        journey with Hb Market.
+    </p>
+
+    <form id="registerForm">
+
+        <label for="fullname">Full Name</label>
+        <input
+            type="text"
+            id="fullname"
+            placeholder="Enter your full name"
+            required
+        >
+
+        <label for="business">Business Name</label>
+        <input
+            type="text"
+            id="business"
+            placeholder="Enter your business name"
+            required
+        >
+
+        <label for="email">Email Address</label>
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+        >
+
+        <label for="phone">Phone Number</label>
+        <input
+            type="tel"
+            id="phone"
+            placeholder="Enter your phone number"
+            required
+        >
+
+        <label for="password">Password</label>
+        <input
+            type="password"
+            id="password"
+            placeholder="Create a password"
+            minlength="8"
+            required
+        >
+
+        <button type="submit">Create Seller Account</button>
+
+    </form>
+
+    <div class="login">
+        Already registered?
+        <a href="login.html">Login</a>
+    </div>
+
+</div>
+
+<footer>
+    Hb Market | Powered by Hb Tech
+</footer>
+
+<script>
+document.getElementById("registerForm").addEventListener(
+    "submit",
+    function(event) {
+        event.preventDefault();
+
+        alert(
+            "Registration form completed! Account creation will be connected securely next."
+        );
+    }
+);
+</script>
+
+</body>
+</html>

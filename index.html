@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hb Market | Shop Online</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    color: #222;
+}
+
+header {
+    background: #111;
+    color: white;
+    padding: 18px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #e5b83e;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #e5b83e;
+}
+
+.hero {
+    min-height: 480px;
+    background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding: 60px 8%;
+    color: white;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background: #e5b83e;
+    color: #111;
+    padding: 14px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #fff;
+}
+
+.search-area {
+    padding: 35px 6%;
+    text-align: center;
+}
+
+.search-area input {
+    width: 100%;
+    max-width: 550px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+section {
+    padding: 45px 6%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 29px;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 20px;
+}
+
+.category {
+    position: relative;
+    height: 210px;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+}
+
+.category img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .3s;
+}
+
+.category:hover img {
+    transform: scale(1.08);
+}
+
+.category h3 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(transparent,rgba(0,0,0,.85));
+}
+
+.featured {
+    background: #f7f7f7;
+    text-align: center;
+}
+
+.featured p {
+    margin-bottom: 25px;
+    line-height: 1.7;
+}
+
+.seller-section {
+    background: #111;
+    color: white;
+    text-align: center;
+}
+
+.seller-section h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.seller-section p {
+    margin-bottom: 25px;
+    line-height: 1.7;
+}
+
+footer {
+    background: #080808;
+    color: white;
+    text-align: center;
+    padding: 30px 15px;
+}
+
+footer p {
+    margin: 8px;
+    font-size: 14px;
+}
+
+@media(max-width:600px) {
+    .hero h1 {
+        font-size: 35px;
+    }
+
+    header {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HB MARKET.</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="cart.html">Cart</a>
+        <a href="seller dashboard.html">Sell With Us</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Everything You Need, All In One Marketplace.</h1>
+
+        <p>
+            Welcome to Hb Market, your online marketplace for
+            shopping products from different sellers.
+            Discover amazing products and shop with ease.
+        </p>
+
+        <a href="shop.html" class="btn">Explore Marketplace</a>
+    </div>
+</section>
+
+<div class="search-area">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search for products..."
+        onkeydown="if(event.key==='Enter') searchProducts()"
+    >
+</div>
+
+<section>
+    <h2 class="section-title">Explore Categories</h2>
+
+    <div class="categories">
+
+        <a href="clothing.html" class="category">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600">
+            <h3>Clothing</h3>
+        </a>
+
+        <a href="accessories.html" class="category">
+            <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=600">
+            <h3>Accessories</h3>
+        </a>
+
+        <a href="artwork.html" class="category">
+            <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600">
+            <h3>Artwork</h3>
+        </a>
+
+        <a href="food.html" class="category">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600">
+            <h3>Food</h3>
+        </a>
+
+        <a href="electronics.html" class="category">
+            <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=600">
+            <h3>Electronics</h3>
+        </a>
+
+        <a href="other-products.html" class="category">
+            <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=600">
+            <h3>Other Products</h3>
+        </a>
+
+    </div>
+</section>
+
+<section class="featured">
+    <h2 class="section-title">Featured Products</h2>
+
+    <p>
+        Discover products from different sellers across Hb Market.
+        Find what you need in one convenient place.
+    </p>
+
+    <a href="shop.html" class="btn">Browse Products</a>
+</section>
+
+<section class="seller-section">
+    <h2>Want to Sell Something?</h2>
+
+    <p>
+        Join Hb Market as a seller and showcase your products
+        to customers. Create your seller account and choose
+        a subscription plan to get started.
+    </p>
+
+    <a href="premium.html" class="btn">Become a Seller</a>
+</section>
+
+<footer>
+    <p><strong>HB MARKET.</strong></p>
+    <p>A marketplace powered by Hb Tech.</p>
+    <p>Shop. Discover. Sell.</p>
+    <p>© 2026 Hb Market. All rights reserved.</p>
+</footer>
+
+<script>
+function searchProducts() {
+    const search = document.getElementById("searchInput").value.trim();
+
+    if (search) {
+        window.location.href =
+            "shop.html?search=" + encodeURIComponent(search);
+    }
+}
+</script>
+
+</body>
+</html>

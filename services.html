@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hb Market | Services</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222}
+header{background:#111;color:white;text-align:center;padding:20px}
+nav{background:#222;padding:14px;text-align:center}
+nav a{color:white;text-decoration:none;margin:12px}
+.hero{background:#111;color:white;text-align:center;padding:40px 15px}
+.container{max-width:1000px;margin:auto;padding:20px}
+h2{margin-bottom:15px}
+select,input{width:100%;padding:13px;margin:7px 0;border:1px solid #ccc;border-radius:6px}
+.provider{background:#111;color:white;padding:25px;text-align:center;border-radius:10px;margin:25px 0}
+.provider a{display:inline-block;background:#f5c400;color:#111;text-decoration:none;padding:13px 20px;border-radius:6px;margin-top:15px;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px}
+.service{background:white;border-radius:9px;overflow:hidden;cursor:pointer;box-shadow:0 2px 7px #ddd}
+.service img{width:100%;height:125px;object-fit:cover}
+.service h3{padding:12px;font-size:15px}
+.job{background:white;padding:14px;margin:15px 0;border-radius:9px;cursor:pointer}
+.job img{width:100%;height:180px;object-fit:cover;border-radius:7px}
+.job h3{margin:10px 0}
+button{padding:12px;border:0;border-radius:6px;cursor:pointer}
+.back{background:#222;color:white;margin-bottom:15px}
+.whatsapp{display:inline-block;background:#128c48;color:white;text-decoration:none;padding:13px 20px;border-radius:6px;margin-top:15px}
+#details{display:none;background:white;padding:20px;border-radius:10px;margin-top:20px}
+#details img{width:100%;border-radius:8px;margin:12px 0}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Hb Market</h1>
+<p>A marketplace powered by Hb Tech</p>
+</header>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="index.html">Shop</a>
+<a href="services.html">Services</a>
+</nav>
+
+<section class="hero">
+<h2>Find Services Near You</h2>
+<p>Discover skilled workers around you.</p>
+</section>
+
+<div class="container">
+
+<h2>Find a Service</h2>
+
+<select id="state">
+<option value="">Select your state</option>
+</select>
+
+<input id="area" placeholder="Enter your LGA or area">
+
+<select id="categoryFilter">
+<option value="">All Services</option>
+<option>Hair Plaiting</option>
+<option>Plumbing</option>
+<option>Electrical Work</option>
+<option>Painting</option>
+<option>Cleaning</option>
+<option>Catering</option>
+<option>Photography</option>
+<option>Fashion Design</option>
+<option>Repairs</option>
+<option>Other Services</option>
+</select>
+
+<div class="provider">
+<h2>Become a Service Provider</h2>
+<p>Advertise your skills on Hb Market.</p>
+<p>Mega Premium</p>
+<p>₦5,000 monthly or ₦50,000 yearly</p>
+<a href="/megaregistration.html">Become a Service Provider</a>
+</div>
+
+<h2>Browse Services</h2>
+
+<div class="grid">
+
+<div class="service" onclick="chooseCategory('Hair Plaiting')">
+<img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=500" alt="Hair styling">
+<h3>Hair Plaiting</h3>
+</div>
+
+<div class="service" onclick="chooseCategory('Plumbing')">
+<img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=500" alt="Plumbing">
+<h3>Plumbing</h3>
+</div>
+
+<div class="service" onclick="chooseCategory('Electrical Work')">
+<img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=500" alt="Electrical work">
+<h3>Electrical Work</h3>
+</div>
+
+<div class="service" onclick="chooseCategory('Painting')">
+<img src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=500" alt="Painting">
+<h3>Painting</h3>
+</div>
+
+<div class="service" onclick="chooseCategory('Cleaning')">
+<img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500" alt="Cleaning">
+<h3>Cleaning</h3>
+</div>
+
+<div class="service" onclick="chooseCategory('Catering')">
+<img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=500" alt="Catering">
+<h3>Catering</h3>
+</div>
+
+<div class="service" onclick="chooseCategory('Photography')">
+<img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=500" alt="Photography">
+<h3>Photography</h3>
+</div>
+
+<div class="service" onclick="chooseCategory('Fashion Design')">
+<img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500" alt="Fashion design">
+<h3>Fashion Design</h3>
+</div>
+
+</div>
+
+<section id="jobs" style="margin-top:35px">
+<h2>Available Service Providers</h2>
+<p id="emptyMessage">No approved service listings available yet.</p>
+<div id="jobList"></div>
+</section>
+
+<section id="details">
+<button class="back" onclick="closeDetails()">Back to Services</button>
+<div id="detailsContent"></div>
+</section>
+
+</div>
+
+<script>
+const states=[
+"Abia","Adamawa","Akwa Ibom","Anambra","Bauchi",
+"Bayelsa","Benue","Borno","Cross River","Delta",
+"Ebonyi","Edo","Ekiti","Enugu","Gombe","Imo",
+"Jigawa","Kaduna","Kano","Katsina","Kebbi",
+"Kogi","Kwara","Lagos","Nasarawa","Niger",
+"Ogun","Ondo","Osun","Oyo","Plateau","Rivers",
+"Sokoto","Taraba","Yobe","Zamfara",
+"Federal Capital Territory"
+];
+
+const stateSelect=document.getElementById("state");
+
+states.forEach(function(state){
+let option=document.createElement("option");
+option.value=state;
+option.textContent=state;
+stateSelect.appendChild(option);
+});
+
+function chooseCategory(category){
+document.getElementById("categoryFilter").value=category;
+document.getElementById("jobs").scrollIntoView();
+}
+
+function closeDetails(){
+document.getElementById("details").style.display="none";
+document.getElementById("jobs").style.display="block";
+}
+
+function escapeText(value){
+return String(value||"").replace(/[&<>"']/g,function(char){
+return {
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[char];
+});
+}
+
+function showDetails(job){
+document.getElementById("jobs").style.display="none";
+document.getElementById("details").style.display="block";
+
+let phone=String(job.whatsapp||"").replace(/\D/g,"");
+
+let contact=phone
+?'<a class="whatsapp" href="https://wa.me/'+phone+'" target="_blank">Contact on WhatsApp</a>'
+:"<p>WhatsApp number unavailable.</p>";
+
+document.getElementById("detailsContent").innerHTML=
+"<h2>"+escapeText(job.title)+"</h2>"+
+'<img src="'+escapeText(job.imageUrl)+'" alt="Service photo">'+
+"<p><b>Provider:</b> "+escapeText(job.providerName)+"</p>"+
+"<p><b>Category:</b> "+escapeText(job.category)+"</p>"+
+"<p><b>Location:</b> "+escapeText(job.lga)+", "+escapeText(job.state)+"</p>"+
+"<p><b>Price:</b> "+escapeText(job.price)+"</p>"+
+"<p>"+escapeText(job.description)+"</p>"+
+contact;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Seller Registration - Hb Market</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f5f8;
+  color: #222;
+}
+
+header {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 22px;
+}
+
+.container {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 23px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px #0001;
+}
+
+.plan {
+  border: 1px solid #ddd;
+  padding: 18px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.price {
+  font-size: 25px;
+  font-weight: bold;
+  color: #168b45;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  background: #111;
+  color: white;
+  border-radius: 7px;
+  font-size: 16px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.note {
+  background: #fff4d6;
+  padding: 13px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.back {
+  color: #111;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>Hb Market</h2>
+  <p>Premium Seller Membership</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+  <h2>Become a Product Seller</h2>
+
+  <p>
+    Join Hb Market Premium and showcase your physical
+    products to customers.
+  </p>
+
+  <h3>Premium Benefits</h3>
+
+  <ul>
+    <li>Advertise physical products.</li>
+    <li>Display product pictures.</li>
+    <li>Show product descriptions and prices.</li>
+    <li>Receive customer enquiries through WhatsApp.</li>
+    <li>Manage your product advertisements.</li>
+    <li>Post up to 10 products per day.</li>
+    <li>No extra payment per product or picture.</li>
+  </ul>
+
+  <p>
+    <b>Note:</b> This membership is for physical products only.
+    Service providers need separate Mega Premium membership.
+  </p>
+</div>
+
+<div class="card">
+
+  <h3>Choose Your Subscription</h3>
+
+  <div class="plan">
+    <h3>Monthly Premium</h3>
+    <p class="price">₦2,000</p>
+    <p>Valid for 30 days.</p>
+
+    <button onclick="selectPlan('monthly')">
+      Choose Monthly
+    </button>
+  </div>
+
+  <div class="plan">
+    <h3>Yearly Premium</h3>
+    <p class="price">₦20,000</p>
+    <p>Valid for 365 days.</p>
+
+    <button onclick="selectPlan('yearly')">
+      Choose Yearly
+    </button>
+  </div>
+
+  <div id="confirmation"
+       style="display:none; margin-top:20px;">
+
+    <h3 id="selectedPlan"></h3>
+
+    <p class="note">
+      Your selected plan is not yet active.
+      Payment and subscription verification are coming soon.
+      You cannot access the Seller Dashboard until your
+      subscription is successfully verified.
+    </p>
+
+    <button onclick="paymentNotice()">
+      Continue
+    </button>
+
+  </div>
+
+  <p id="message"></p>
+
+  <a class="back" href="index.html">← Back to Home</a>
+
+</div>
+</div>
+
+<script>
+
+let chosenPlan = "";
+
+function selectPlan(plan) {
+
+  chosenPlan = plan;
+
+  const confirmation =
+    document.getElementById("confirmation");
+
+  const selectedPlan =
+    document.getElementById("selectedPlan");
+
+  if (plan === "monthly") {
+    selectedPlan.textContent =
+      "You selected Monthly Premium: ₦2,000";
+  } else {
+    selectedPlan.textContent =
+      "You selected Yearly Premium: ₦20,000";
+  }
+
+  confirmation.style.display = "block";
+
+  document.getElementById("message").textContent =
+    "Your plan has been selected.";
+}
+
+function paymentNotice() {
+
+  if (!chosenPlan) {
+    alert("Please select a plan first.");
+    return;
+  }
+
+  alert(
+    "Premium payment is coming soon. " +
+    "Your subscription has not been activated yet."
+  );
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hb Market | Services</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f5f5;color:#222}
+header{background:#111;color:white;padding:18px;text-align:center}
+header h2{color:#e5b83e}
+nav{margin-top:12px}
+nav a{color:white;text-decoration:none;margin:10px}
+.hero{background:#171717;color:white;padding:35px 15px;text-align:center}
+.hero h1{color:#e5b83e;margin-bottom:12px}
+.container{max-width:1000px;margin:20px auto;padding:15px}
+.panel,.premium,.service-card{
+background:white;padding:18px;border-radius:12px;margin-bottom:18px
+}
+label{display:block;font-weight:bold;margin-top:15px}
+select,input{
+width:100%;padding:13px;margin-top:7px;
+border:1px solid #ccc;border-radius:7px;background:white
+}
+input:focus,select:focus{outline:2px solid #e5b83e}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:18px
+}
+.service-card{padding:0;overflow:hidden}
+.service-card img{width:100%;height:170px;object-fit:cover}
+.service-info{padding:15px}
+.service-info h3{margin-bottom:8px}
+.service-info p{margin:7px 0;color:#555}
+.whatsapp{
+display:inline-block;background:#168b45;color:white;
+padding:11px 15px;border-radius:7px;text-decoration:none;margin-top:10px
+}
+.premium{text-align:center;border:2px solid #e5b83e}
+.premium h2{color:#a77b10;margin-bottom:10px}
+button{
+background:#111;color:white;border:0;padding:12px 18px;
+border-radius:7px;cursor:pointer;margin-top:12px
+}
+.status{font-size:13px;color:#666;margin-top:10px}
+.zone{
+background:#fff7dc;padding:12px;border-radius:7px;
+margin-top:10px;font-weight:bold
+}
+footer{text-align:center;background:#111;color:white;padding:20px;margin-top:30px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Hb Market</h2>
+<p>A marketplace powered by Hb Tech</p>
+<nav>
+<a href="index.html">Home</a>
+<a href="shop.html">Shop</a>
+<a href="services.html">Services</a>
+</nav>
+</header>
+
+<section class="hero">
+<h1>Find Services Near You</h1>
+<p>Discover service providers across Nigeria.</p>
+</section>
+
+<main class="container">
+
+<section class="panel">
+<h2>Choose Your Location</h2>
+<p class="status">Select your state first, then search for your city or LGA.</p>
+
+<label for="state">1. Select State</label>
+<select id="state">
+<option value="">Loading Nigerian states...</option>
+</select>
+
+<label for="lgaSearch">2. Search or Select City / LGA</label>
+<input id="lgaSearch" list="lgaOptions"
+placeholder="Choose a state first" disabled>
+<datalist id="lgaOptions"></datalist>
+
+<div class="zone" id="zoneDisplay">
+Geopolitical zone will appear here.
+</div>
+
+<p class="status" id="locationStatus">
+Loading location information...
+</p>
+</section>
+
+<section class="panel">
+<h2>Find a Service</h2>
+
+<label for="search">Search service</label>
+<input id="search" placeholder="Example: plumber, hair stylist">
+
+<label for="category">Service category</label>
+<select id="category">
+<option value="">All Service Categories</option>
+<option>Hair Plaiting</option>
+<option>Plumbing</option>
+<option>Electrical Work</option>
+<option>Painting</option>
+<option>Cleaning</option>
+<option>Catering</option>
+<option>Photography</option>
+<option>Fashion Design</option>
+<option>Repairs</option>
+<option>Other Services</option>
+</select>
+</section>
+
+<h2 style="margin-bottom:15px">Available Services</h2>
+<div class="grid" id="servicesList"></div>
+
+<section class="premium">
+<h2>Mega Premium</h2>
+<p>Advertise your services across Nigeria.</p>
+<br>
+<h3>₦5,000 / Month</h3>
+<h3>₦50,000 / Year</h3>
+<br>
+<p>Register as a service provider and reach more customers.</p>
+<button onclick="alert('Mega Premium registration will be connected soon.')">
+Become a Service Provider
+</button>
+</section>
+
+</main>
+
+<footer>
+<p>© 2026 Hb Market | Powered by Hb Tech</p>
+</footer>
+
+<script>
+const stateSelect = document.getElementById("state");
+const lgaSearch = document.getElementById("lgaSearch");
+const lgaOptions = document.getElementById("lgaOptions");
+const zoneDisplay = document.getElementById("zoneDisplay");
+const locationStatus = document.getElementById("locationStatus");
+
+const zones = {
+"Abia":"South East",
+"Adamawa":"North East",
+"Akwa Ibom":"South South",
+"Anambra":"South East",
+"Bauchi":"North East",
+"Bayelsa":"South South",
+"Benue":"North Central",
+"Borno":"North East",
+"Cross River":"South South",
+"Delta":"South South",
+"Ebonyi":"South East",
+"Edo":"South South",
+"Ekiti":"South West",
+"Enugu":"South East",
+"Federal Capital Territory":"North Central",
+"Gombe":"North East",
+"Imo":"South East",
+"Jigawa":"North West",
+"Kaduna":"North West",
+"Kano":"North West",
+"Katsina":"North West",
+"Kebbi":"North West",
+"Kogi":"North Central",
+"Kwara":"North Central",
+"Lagos":"South West",
+"Nasarawa":"North Central",
+"Niger":"North Central",
+"Ogun":"South West",
+"Ondo":"South West",
+"Osun":"South West",
+"Oyo":"South West",
+"Plateau":"North Central",
+"Rivers":"South South",
+"Sokoto":"North West",
+"Taraba":"North East",
+"Yobe":"North East",
+"Zamfara":"North West"
+};
+
+let allStates = [];
+let allLgas = [];
+let selectedState = "";
+let services = [];
+
+async function loadLocations(){
+try{
+locationStatus.textContent="Getting Nigerian location list...";
+
+const response = await fetch(
+"https://api.openadmindata.org/api/v1/countries/ng.json"
+);
+
+if(!response.ok) throw new Error("Location data unavailable");
+
+const result = await response.json();
+
+allStates = result.data.state || [];
+allLgas = result.data.lga || [];
+
+allStates.sort((a,b)=>
+a.name_en.localeCompare(b.name_en)
+);
+
+stateSelect.innerHTML='<option value="">Choose a state</option>';
+
+allStates.forEach(item=>{
+const option=document.createElement("option");
+option.value=item.id;
+option.textContent=item.name_en;
+stateSelect.appendChild(option);
+});
+
+locationStatus.textContent=
+"All Nigerian states loaded. Select your state.";
+
+}catch(error){
+stateSelect.innerHTML='<option value="">Could not load states</option>';
+locationStatus.textContent=
+"Could not load location data. Please check your internet and refresh.";
+}
+}
+
+stateSelect.addEventListener("change",()=>{
+const chosen=allStates.find(s=>s.id===stateSelect.value);
+
+selectedState=chosen ? chosen.name_en : "";
+
+lgaSearch.value="";
+lgaSearch.disabled=!chosen;
+lgaOptions.innerHTML="";
+
+if(!chosen){
+zoneDisplay.textContent="Geopolitical zone will appear here.";
+return;
+}
+
+const zone=zones[selectedState] || "Zone unavailable";
+
+zoneDisplay.textContent="Geopolitical Zone: "+zone;
+
+const stateLgas=allLgas
+.filter(item=>item.parent_id===chosen.id)
+.sort((a,b)=>a.name_en.localeCompare(b.name_en));
+
+stateLgas.forEach(item=>{
+const option=document.createElement("option");
+option.value=item.name_en;
+lgaOptions.appendChild(option);
+});
+
+lgaSearch.placeholder="Search an LGA in "+selectedState;
+locationStatus.textContent=
+stateLgas.length+" LGAs loaded for "+selectedState+".";
+});
+
+const demoServices=[
+{
+name:"Professional Hair Plaiting",
+category:"Hair Plaiting",
+state:"Lagos",
+lga:"Ikorodu",
+description:"Hair plaiting and styling services.",
+image:"https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600",
+phone:"2348000000000"
+},
+{
+name:"Plumbing Services",
+category:"Plumbing",
+state:"Ogun",
+lga:"Abeokuta South",
+description:"General plumbing and pipe repairs.",
+image:"https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600",
+phone:"2348000000000"
+},
+{
+name:"Electrical Installation",
+category:"Electrical Work",
+state:"Lagos",
+lga:"Ikeja",
+description:"Electrical installation and maintenance.",
+image:"https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600",
+phone:"2348000000000"
+}
+];
+
+services=demoServices;
+
+function displayServices(){
+const search=document.getElementById("search").value.toLowerCase();
+const category=document.getElementById("category").value;
+const chosenLga=lgaSearch.value.trim();
+
+const filtered=services.filter(item=>
+item.name.toLowerCase().includes(search) &&
+(!category || item.category===category) &&
+(!selectedState || item.state===selectedState) &&
+(!chosenLga || item.lga.toLowerCase()===chosenLga.toLowerCase())
+);
+
+const list=document.getElementById("servicesList");
+list.innerHTML="";
+
+if(filtered.length===0){
+list.innerHTML="<p>No services found for this search or location yet.</p>";
+return;
+}
+
+filtered.forEach(item=>{
+list.innerHTML+=`
+<div class="service-card">
+<img src="${item.image}" alt="${item.name}">
+<div class="service-info">
+<h3>${item.name}</h3>
+<p>${item.description}</p>
+<p>📍 ${item.lga}, ${item.state}</p>
+<p>${item.category}</p>
+<a class="whatsapp" target="_blank"
+href="https://wa.me/${item.phone}">
+Contact on WhatsApp
+</a>
+</div>
+</div>`;
+});
+}
+
+[
+document.getElementById("search"),
+document.getElementById("category"),
+lgaSearch
+].forEach(element=>{
+element.addEventListener("input",displayServices);
+});
+
+loadLocations();
+displayServices();
+</script>
+
+</body>
+</html>
